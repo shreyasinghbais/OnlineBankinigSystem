@@ -200,13 +200,12 @@ public class Main {
 			success = accountantService.createAccount(customerId, accountNumber, initialBalance);
 			if (!success) {
 	            System.out.println("Account created successfully!");
-	        } else {
-	            System.out.println("Failed to create account. Please try again.");
-	        }
+            } 
 		} catch (AccountException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			e.printStackTrace(); 
+            System.out.println("Failed to create account. Please try again.");
+  		}
     }
 	
 	private static void depositMoney(Scanner scanner) {
@@ -219,24 +218,24 @@ public class Main {
 			success = accountantService.deposit(accountId, amount);
 			if (success) {
 				System.out.println("Deposit successful!");
-			} else {
-				System.out.println("Failed to deposit money. Please try again.");
-			}
+			}  
 		} catch (AccountException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Failed to deposit money. Please try again.");
 		} catch (TransactionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Failed to deposit money. Please try again.");
 		}
 		
         
     }
 	
 	private static void withdrawMoney(Scanner scanner) {
-        System.out.print("Enter account ID: ");
+        System.out.println("Enter account ID: ");
         int accountId = scanner.nextInt();
-        System.out.print("Enter amount to withdraw: ");
+        System.out.println("Enter amount to withdraw: ");
         double amount = scanner.nextDouble();
 
         boolean success = accountantService.withdraw(accountId, amount);
@@ -250,12 +249,12 @@ public class Main {
 	private static void transferMoney(Scanner scanner) {
         System.out.print("Enter source account ID: ");
         int fromAccountId = scanner.nextInt();
-        System.out.print("Enter destination account No.: ");
-        String toAccountNo = scanner.nextLine();
+        System.out.print("Enter destination account ID: ");
+        int toAccountId = scanner.nextInt();
         System.out.print("Enter amount to transfer: ");
         double amount = scanner.nextDouble();
 
-        boolean success = userService.transfer(fromAccountId, toAccountNo, amount);
+        boolean success = userService.transfer(fromAccountId, toAccountId, amount);
         if (success) {
             System.out.println("Transfer successful!");
         } else {

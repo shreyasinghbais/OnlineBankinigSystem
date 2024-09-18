@@ -9,7 +9,7 @@ public interface AccountsDao {
 	//Create
 	public boolean createAccount(Accounts a1) throws AccountException;
 	//Read
-	public Accounts getAccountDetailsByAccountNo(String account_number) throws AccountException;
+	public Accounts getAccountDetailsByAccountId(int account_id) throws AccountException;
 	public List<Accounts> getAllAccountDetails() throws AccountException;
 	//Update
 	public boolean updateAccountDetails(Accounts u1) throws AccountException;

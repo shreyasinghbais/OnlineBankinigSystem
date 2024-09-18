@@ -26,15 +26,15 @@ public class AccountantService {
     }
 	
 	// Method to deposit money into an account
-    public boolean deposit(int account_number, double amount) throws AccountException, TransactionException{
-    	Accounts account = accountDao.getAccountDetailsByAccountNo(String.valueOf(account_number));
+    public boolean deposit(int account_id, double amount) throws AccountException, TransactionException{
+    	Accounts account = accountDao.getAccountDetailsByAccountId(account_id);
         if (account != null) {
             double newBalance = account.getBalance() + amount;
             account.setBalance(newBalance);
             boolean accountUpdated = accountDao.updateAccountDetails(account);
 
             if (accountUpdated) {
-                Transactions transaction = new Transactions(0, account_number, amount, "Deposit", new Timestamp(System.currentTimeMillis()));
+                Transactions transaction = new Transactions(0, account_id, amount, "Deposit", new Timestamp(System.currentTimeMillis()));
                 return transactionDao.doTransaction(transaction);
             }
         } 
@@ -44,7 +44,7 @@ public class AccountantService {
     // Method to withdraw money from an account
     public boolean withdraw(int account_number, double amount) {
         try {
-        	Accounts account = accountDao.getAccountDetailsByAccountNo(String.valueOf(account_number));
+        	Accounts account = accountDao.getAccountDetailsByAccountId(account_number);
             if (account != null && account.getBalance() >= amount) {
                 double newBalance = account.getBalance() - amount;
                 account.setBalance(newBalance);
@@ -62,7 +62,7 @@ public class AccountantService {
     }
     
     // Method to get account details by account number
-    public Accounts getAccountByAccountNumber(String accountNumber) throws AccountException {
-        return accountDao.getAccountDetailsByAccountNo(accountNumber);
+    public Accounts getAccountByAccountNumber(int accountNumber) throws AccountException {
+        return accountDao.getAccountDetailsByAccountId(accountNumber);
     }
 }

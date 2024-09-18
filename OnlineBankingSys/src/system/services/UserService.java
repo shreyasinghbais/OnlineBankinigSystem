@@ -20,10 +20,10 @@ public class UserService {
 	}
     
 	// Method to transfer money between accounts
-    public boolean transfer(int accountId, String to_account_number, double amount) {
+    public boolean transfer(int accountId, int to_account_id, double amount) {
         try {
-        	Accounts fromAccount = accountDAO.getAccountDetailsByAccountNo(String.valueOf(accountId));
-            Accounts toAccount =accountDAO.getAccountDetailsByAccountNo(String.valueOf(to_account_number));
+        	Accounts fromAccount = accountDAO.getAccountDetailsByAccountId(accountId);
+            Accounts toAccount =accountDAO.getAccountDetailsByAccountId(to_account_id);
 
             if (fromAccount != null && toAccount != null && fromAccount.getBalance() >= amount) {
                 // Withdraw from the source account

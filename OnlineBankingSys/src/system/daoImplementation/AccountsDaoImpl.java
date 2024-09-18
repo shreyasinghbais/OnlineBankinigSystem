@@ -59,24 +59,31 @@ public class AccountsDaoImpl implements AccountsDao{
 		}
         return false; 
 	}
+	
 	@Override
-	public Accounts getAccountDetailsByAccountNo(String account_number) throws AccountException {
-		ArrayList<Accounts> listOfAccount = new ArrayList<>() ;
-		String query = "SELECT * FROM Accounts WHERE account_number = ?";
+	public Accounts getAccountDetailsByAccountId(int account_id) throws AccountException {
+		//ArrayList<Accounts> listOfAccount = new ArrayList<>() ;
+		Accounts a = null;
+		String query = "SELECT * FROM Accounts WHERE account_id = ?";
         try {
         	con = establishConnection();
         	ppst = con.prepareStatement(query);
-            ppst.setString(1, account_number);
+            ppst.setInt(1, account_id);
             rs = ppst.executeQuery();
             if (rs.next()) {
-                listOfAccount.add( 
-                	new Accounts(
-                		rs.getInt("account_id"),
+            	a = new Accounts(rs.getInt("account_id"),
                 		rs.getInt("customer_id"),
                 		rs.getString("account_number"),
                 		rs.getDouble("balance")
-                   )
-                );
+                	);
+//                listOfAccount.add( 
+//                	new Accounts(
+//                		rs.getInt("account_id"),
+//                		rs.getInt("customer_id"),
+//                		rs.getString("account_number"),
+//                		rs.getDouble("balance")
+//                   )
+//                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,8 +99,8 @@ public class AccountsDaoImpl implements AccountsDao{
 				e.printStackTrace();
 			}
 		}
-        System.out.println(listOfAccount);
-        return null;
+        System.out.println(a);
+        return a;
 	}
 	@Override
 	public List<Accounts> getAllAccountDetails() throws AccountException {
@@ -199,8 +206,8 @@ public class AccountsDaoImpl implements AccountsDao{
 			//a.createAccount(new Accounts(3, 1, "00003", 8000.00));
 			//a.updateAccountDetails(new Accounts(2, 3, "00002", 7000.00));
 			//a.deleteAccount(2);
-			//a.getAccountDetailsByAccountNo("00003");
-			a.getAllAccountDetails();
+			a.getAccountDetailsByAccountId(8);
+			//a.getAllAccountDetails();
 		} catch (AccountException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
